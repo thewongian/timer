@@ -50,13 +50,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             listFragment.setText(taskFragment.timer.listToString());
         }
 
-        if (taskFragment.isRunning()) {
-            timerFragment.setStartText("Stop");
-        }
+
         //make sure taskFragment is instantiated
         if (taskFragment == null) {
             taskFragment = new TaskFragment();
             fm.beginTransaction().add(taskFragment, TASK_TAG).commit();
+        }
+
+        if (taskFragment.isRunning()) {
+            timerFragment.setStartText("Stop");
         }
         //instantiate button for portrait mode
         toList = (Button) findViewById(R.id.toList);
