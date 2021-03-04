@@ -2,7 +2,7 @@ package com.example.timer;
 
 /**
  * @author Ian Wong (thewongian)
- * a time, keeps track of the time when time button is pressed
+ * a time, has hours, minutes, and seconds
  */
 public class Time {
     private int hour;
@@ -64,6 +64,9 @@ public class Time {
         }
     }
 
+    /**
+     * resets the time
+     */
     public void reset() {
         second = 0;
         minute = 0;
