@@ -13,12 +13,11 @@ import android.widget.TextView;
 /**
  * Fragment subclass that represents actions of timer
  * Takes care of user input in the timer fragment
+ * @author Ian Wong (thewongian)
  */
 public class TimerFragment extends Fragment implements View.OnClickListener{
 
-    private TimerAsyncTask asyncTask;
-    boolean running;
-    public Timer timer;
+
     private Button start, lap, reset;
     private TextView time;
 
@@ -52,17 +51,17 @@ public class TimerFragment extends Fragment implements View.OnClickListener{
         lap = (Button) view.findViewById(R.id.lap);
         reset = (Button) view.findViewById(R.id.reset);
         time = (TextView) view.findViewById(R.id.timer);
-        timer = new Timer();
+
         start.setOnClickListener(this);
         lap.setOnClickListener(this);
         reset.setOnClickListener(this);
 
-        asyncTask = new TimerAsyncTask();
         return view;
     }
 
+
     /**
-     *
+     * run when attached to an activity
      * @param context
      * app context on attach
      */
@@ -93,76 +92,75 @@ public class TimerFragment extends Fragment implements View.OnClickListener{
      */
     @Override
     public void onClick(View v) {
+        // start/stop
         if(v.getId() == start.getId()) {
-            if (asyncTask.getStatus() != AsyncTask.Status.RUNNING) {
-                running = true;
-                asyncTask = new TimerAsyncTask();
-
-                asyncTask.execute();
-
-
-            }
 
             if (start.getText().toString().equals("Start")) {
-                start.setText("Stop");
+                setStartText("Stop");
 
             }
             else {
-                start.setText("Start");
-                running = false;
+                setStartText("Start");
+
             }
-        }
-        else if (v.getId() == lap.getId()) {
-            timer.addTime(time.getText().toString());
             mListener.onButtonClicked(0);
         }
-        else if(v.getId() == reset.getId()) {
-            running = false;
-            timer.reset();
-            time.setText(timer.getTime().toString());
-            start.setText("Start");
+        // lap
+        else if (v.getId() == lap.getId()) {
 
             mListener.onButtonClicked(1);
+        }
+        // reset
+        else if(v.getId() == reset.getId()) {
+
+
+            start.setText("Start");
+
+            mListener.onButtonClicked(2);
 
 
 
         }
     }
 
-
-    private class TimerAsyncTask extends AsyncTask<Void, Time, Void> {
-
-        /**
-         *
-         * @param times
-         */
-        @Override
-        protected void onProgressUpdate(Time... times) {
-            super.onProgressUpdate(times);
-            String curr_time = times[0].toString();
-            time.setText(curr_time);
-        }
-        /**
-         *
-         * @param
-         * @return
-         */
-        @Override
-        protected Void doInBackground(Void... params) {
-            while (running) {
-                timer.calc();
-                publishProgress(timer.getTime());
-                try {
-                    Thread.sleep(1000); // sleep for 1 second (1000 milliseconds)
-                }
-                catch (Exception e) {
-                    System.out.println(e);
-                }
-            }
-            return null;
-        }
+    /**
+     * gets text of time display for laps
+     * @return the text of the time
+     */
+    public String getTimeText() {
+        return time.getText().toString();
     }
+
+    /**
+     * sets text of start/stop button
+     * @param s
+     * text you want to set button to
+     */
+    public void setStartText(String s) {
+        start.setText(s);
+    }
+
+    /**
+     * sets test of Time TextView
+     * @param s
+     * text you want to set time to
+     */
+    public void setTime(String s) {
+        time.setText(s);
+    }
+
+
+    /**
+     * object that will do something when this class wants it to
+     * @author Ian Wong (thewongian)
+     */
     public interface OnFragmentInteractionListener{
+        /**
+         * Implementing interaction listener method
+         * when a button in timerfrag is clicked, this activity will know and react accordingly
+         * @param infoID
+         * id of button pressed, decides the action
+         */
         void onButtonClicked(int infoID);
     }
 }
