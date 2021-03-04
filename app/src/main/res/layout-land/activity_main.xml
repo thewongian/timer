@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#B5B5B5"
+    tools:context=".MainActivity">
+
+    <fragment
+        android:id="@+id/timerFrag"
+        android:name="com.example.timer.TimerFragment"
+        android:layout_width="324dp"
+        android:layout_height="217dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginBottom="98dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_timer" />
+
+    <fragment
+        android:id="@+id/listFrag"
+        android:name="com.example.timer.ListFragment"
+        android:layout_width="345dp"
+        android:layout_height="414dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/timerFrag"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_list" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
